@@ -1,5 +1,8 @@
 pragma solidity >=0.7.0 <0.9.0;
 
+// Concepts:
+// Original Owner: The initial owner of the funds.
+// Inheritor/s: Those who shall receive the gift stated on the testament when the original owner is dead
 
 contract ProofOfHumanity {
     function isRegistered(address _submissionID) external view returns (bool) {
@@ -23,15 +26,22 @@ contract DecentralizedTestament{
         Testament [] testaments;
     }
 
-    function sign(address _original_owner) public {
-        require (is_registered(_original_owner)==True)
+    function sign_testament(address inheritor) public { //called by the original owner
+        require (is_registered(msg.sender)==True); //msg.sender is the original owner
         //...
     }
-    function require_funds () public payable { //called by the inheritor
-        require (check_death(deceased_address) == True);
-        // Agregar require para verificar que el heredero este en la lista
-        // y se corresponda con el fallecido
-        transfer(deceased_address, msg.sender) //msg.sender is the inheritor
+
+    function require_funds (address deceased_address) public payable { //called by the inheritor
+        require (is_dead(deceased_address) == True);
+        for (uint i=0; i<testaments.length; i++) {
+            if (testaments[i]._original_owner==deceased_address){
+                break;
+            }
+        require(testaments[i].inheritor==msg.sender); //msg.sender is the inheritor
+        }     
+        transfer(deceased_address, msg.sender); 
+    }
+        
     }
     function transfer (deceased_address, inheritor) private {
         // Aca vas a necesitar accesso a la firma inicial
@@ -47,11 +57,3 @@ contract DecentralizedTestament{
     function is_dead(address deceased_address) public {
         return is_registered(deceased_address)==False; 
    }
-
-
-    
-
-    
-
-
-
