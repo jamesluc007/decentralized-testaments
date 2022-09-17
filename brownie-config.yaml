@@ -1,0 +1,5 @@
+networks:
+  private:
+    host: http://127.0.0.1:8545/
+    gas_prive: 0
+    persist: false
