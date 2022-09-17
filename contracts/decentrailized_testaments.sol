@@ -17,11 +17,11 @@ contract Testament {
     uint256 private ethbalance;
     uint8 private number_of_inheritors;
 
-    event InheritorAdded(address inheritor_adr)
-    event InheritorRemoved(address inheritor_adr)
-    event InheritorGotItsPart(address inheritor_adr, uint amount)
-    event EthOwnerDeposit(uint amount)
-    event EthOwnerWithdraw(uint amount)
+    event InheritorAdded(address inheritor_adr);
+    event InheritorRemoved(address inheritor_adr);
+    event InheritorGotItsPart(address inheritor_adr, uint amount);
+    event EthOwnerDeposit(uint amount);
+    event EthOwnerWithdraw(uint amount);
 
     constructor() {
         owner = msg.sender;
@@ -71,7 +71,7 @@ contract Testament {
     }
 
     function get_you_part () public only_inheritors {
-        require (is_address_alive(owner) == false, "Owner is still alive! You cannot withdraw its money.")
+        require (is_address_alive(owner) == false, "Owner is still alive! You cannot withdraw its money.");
         address payable to = payable(msg.sender);
         uint inheritor_portion = ethbalance/number_of_inheritors;
         to.transfer(inheritor_portion);
@@ -80,20 +80,9 @@ contract Testament {
     }  
     
     // private stuff:
-    
-    // function is_address_alive(address check) private returns (bool){
-    //     return true;
-    // }
 
-    function is_address_alive(address check) private returns (bool){
-        _getValueAtAddress(,,0xC5E9dDebb09Cd64DfaCab4011A0D5cEDaf7c9BDb)
-    }
-
-    function is_address_alive(address check) private returns (bool){
-        address poh_t = 0xC5E9dDebb09Cd64DfaCab4011A0D5cEDaf7c9BDb;
-        Deployed poh_dc;
-        poh_dc = ProofOfHumanity(Self.poh_t);
-        return dc.isRegistered(deceased_address); 
+    function is_address_alive (address check) private returns (bool){
+        return true;
     }
 
 }
